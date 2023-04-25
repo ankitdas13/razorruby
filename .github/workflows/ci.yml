@@ -19,7 +19,7 @@ jobs:
     uses: ruby/setup-ruby@v1
     with:
       ruby-version:  3.1
-  - name: Lint
+  - name: Install dependencies
     run: bundle install
   - name: Build
     run: gem build razorpay-ruby.gemspec
@@ -51,3 +51,22 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         files: ${{ github.workspace }}/coverage/coverage.xml
+ publish:      
+    name: Publish
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all workflow run artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: gems
+        path: gems
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version:  3.1
+    - name: Publish gems to Rubygems
+      run: gem push gems/*.gem
+      env:
+        GEM_API_KEY: ${{secrets.GEM_API_KEY}}
