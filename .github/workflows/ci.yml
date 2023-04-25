@@ -22,7 +22,7 @@ jobs:
   - name: Install dependencies
     run: bundle install
   - name: Build
-    run: gem build razorruby.gemspec
+    run: gem build razorpay-ruby.gemspec
   - name: 'Upload Artifact'
     uses: actions/upload-artifact@v3
     with:
