@@ -9,8 +9,28 @@ on:
     branches:
       - main
 jobs:
+ build:
+  name: Build
+  runs-on: ubuntu-latest
+
+  steps:
+  - uses: actions/checkout@v3
+  - name: Set up Ruby
+    uses: ruby/setup-ruby@v1
+    with:
+      ruby-version:  3.1
+  - name: Lint
+    run: bundle install
+  - name: Build
+    run: gem build razorpay-ruby.gemspec
+  - name: 'Upload Artifact'
+    uses: actions/upload-artifact@v3
+    with:
+      name: gems
+      path: '*.gem'
  test:
   runs-on: ubuntu-latest
+  needs: build
   strategy:
    matrix:
     ruby-version: ['2.6', '2.7', '3.0', '3.1']
@@ -23,7 +43,7 @@ jobs:
       with:
         ruby-version: 3.1
     - name: Install dependencies
-      run: bundle install
+      run: bundle exec rake
     - name: Run tests and collect coverage
       run: bundle exec rake
     - name: Upload coverage to Codecov
