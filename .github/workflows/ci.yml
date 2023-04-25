@@ -22,7 +22,14 @@ jobs:
   - name: Install dependencies
     run: bundle install
   - name: Build
-    run: gem build razorpay-ruby.gemspec
+    run: |
+     mkdir -p $HOME/.gem
+     touch $HOME/.gem/credentials
+     chmod 0600 $HOME/.gem/credentials
+     printf -- "---\n:rubygems_api_key: ${GEM_API_KEY}\n" > $HOME/.gem/credentials
+     gem build razorpay-ruby.gemspec
+    env:
+      GEM_API_KEY: ${{secrets.GEM_API_KEY}} 
   - name: 'Upload Artifact'
     uses: actions/upload-artifact@v3
     with:
