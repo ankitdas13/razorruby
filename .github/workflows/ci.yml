@@ -43,7 +43,7 @@ jobs:
       with:
         ruby-version: 3.1
     - name: Install dependencies
-      run: bundle exec rake
+      run: bundle install & bundle exec rake
     - name: Run tests and collect coverage
       run: bundle exec rake
     - name: Upload coverage to Codecov
