@@ -5,8 +5,8 @@ require 'razorpay/constants'
 Gem::Specification.new do |spec|
   spec.name          = 'razorruby'
   spec.version       = Razorpay::VERSION
-  spec.authors       = ['Abhay Rana', 'Harman Singh']
-  spec.email         = ['nemo@razorpay.com', 'harman@razorpay.com']
+  spec.authors       = ['Ankit das']
+  spec.email         = ['ankit.das@razorpay.com']
   spec.summary       = "Razorpay's Ruby API"
   spec.description   = 'Official ruby bindings for the Razorpay API'
   spec.homepage      = 'https://razorpay.com/'
