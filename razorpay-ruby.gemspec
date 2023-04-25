@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'razorpay/constants'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'razorpay'
+  spec.name          = 'razorruby'
   spec.version       = Razorpay::VERSION
   spec.authors       = ['Abhay Rana', 'Harman Singh']
   spec.email         = ['nemo@razorpay.com', 'harman@razorpay.com']
