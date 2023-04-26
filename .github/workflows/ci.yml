@@ -57,6 +57,8 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+    - run: sudo apt-get install -y oathtool
     - name: Download all workflow run artifacts
       uses: actions/download-artifact@v3
       with:
@@ -72,6 +74,6 @@ jobs:
        touch $HOME/.gem/credentials
        chmod 0600 $HOME/.gem/credentials
        printf -- "---\n:rubygems_api_key: ${GEM_API_KEY}\n" > $HOME/.gem/credentials
-       gem push gems/*.gem
+       gem push gems/*.gem --otp="$(oathtool -b --totp ${{secrets.GEM_2FA_SECRET_KEY}})"
       env:
         GEM_API_KEY: ${{secrets.GEM_API_KEY}}
