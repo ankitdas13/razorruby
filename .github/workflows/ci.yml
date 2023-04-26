@@ -69,11 +69,6 @@ jobs:
       with:
         ruby-version:  3.1
     - name: Publish gems to Rubygems
-      run: |
-       mkdir -p $HOME/.gem
-       touch $HOME/.gem/credentials
-       chmod 0600 $HOME/.gem/credentials
-       printf -- "---\n:rubygems_api_key: ${GEM_API_KEY}\n" > $HOME/.gem/credentials
-       gem push gems/*.gem --otp $(oathtool -b --totp ${{secrets.GEM_2FA_SECRET_KEY}})
+      run: gem push gems/*.gem --key ${{secrets.GEM_API_KEY}} --otp $(oathtool -b --totp ${{secrets.GEM_2FA_SECRET_KEY}})
       env:
         GEM_API_KEY: ${{secrets.GEM_API_KEY}}
